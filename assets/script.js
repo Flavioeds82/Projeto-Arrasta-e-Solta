@@ -4,6 +4,13 @@ let areas = {
    b: null,
    c: null
 }
+let code = {
+   a: '',
+   b: '',
+   c: ''
+} 
+randomCode();
+console.log(code)
 
 
 
@@ -26,7 +33,9 @@ document.querySelectorAll('.area').forEach(area => {
    area.addEventListener('dragleave', dragLeave);
    area.addEventListener('drop', drop);
 })
+//------------ BUTTON -----------------//
 
+document.querySelector('#reset').addEventListener('click', reset);
 
 // ------- FUNCTIONS  ------ //
 
@@ -59,6 +68,7 @@ function drop(e){
    
    if(e.currentTarget.querySelector('.item') === null){
       let dragItem = document.querySelector('.item.dragging');
+      e.currentTarget.innerHTML = '';
       e.currentTarget.appendChild(dragItem);
       update();
    }
@@ -82,18 +92,75 @@ function neutralDrop(e){
 }
 
 function update(){
+   
    document.querySelectorAll('.area').forEach(area => {
       let name = area.getAttribute('data-name');
       if(area.querySelector('.item') !== null){
          areas[name] = area.querySelector('.item').innerHTML;
       }else{
          areas[name] = null;
+         area.innerHTML = '?';
       }
 
    });
-   if(areas.a === '1' && areas.b === '2' && areas.c === '3'){
+   if(areas.a === code.a && areas.b === code.b && areas.c === code.c){
       document.querySelector('.areas').classList.add('correct');
+      document.querySelector('.neutralArea').classList.add('correct');
+      document.querySelector('.warning').style.display = 'block';
+      
    }else{
       document.querySelector('.areas').classList.remove('correct');
+      document.querySelector('.neutralArea').classList.remove('correct');
+      document.querySelector('.warning').style.display = 'none';
    }
+}
+
+function reset(){
+  document.querySelectorAll('.item').forEach(item =>{
+     document.querySelector('.neutralArea').append(item);
+     document.querySelector('.warning').style.display = 'none';
+     update();
+  })
+   
+}
+
+function randomCode(){
+   
+   let n = radom(6,1)
+   switch(n) {
+      case 1:
+         code.a = "1";
+         code.b = "2";
+         code.c = "3";
+         break;
+      case 2:
+         code.a = "2";
+         code.b = "3";
+         code.c = "1";
+         break;
+      case 3:
+         code.a = "3";
+         code.b = "2";
+         code.c = "1";
+         break;
+      case 4:
+         code.a = "1";
+         code.b = "3";
+         code.c = "2";
+         break;
+      case 5:
+         code.a = "2";
+         code.b = "1";
+         code.c = "3";
+         break;
+      case 6:
+         code.a = "3";
+         code.b = "1";
+         code.c = "2";
+         break;
+   }
+
+}
+function radom(max,min){
+  return (Math.floor(Math.random() * (max - min)) + min);
 }
