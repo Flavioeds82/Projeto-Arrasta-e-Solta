@@ -10,7 +10,7 @@ let code = {
    c: ''
 } 
 randomCode();
-console.log(code)
+console.log(`A sequecia aleatória é  ${code.a}-${code.b}-${code.c}`)
 
 
 
