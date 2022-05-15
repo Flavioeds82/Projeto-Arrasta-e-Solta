@@ -9,6 +9,7 @@ let code = {
    b: '',
    c: ''
 } 
+let hit = false;
 randomCode();
 console.log(`A sequecia aleatória é  ${code.a}-${code.b}-${code.c}`)
 
@@ -107,20 +108,34 @@ function update(){
       document.querySelector('.areas').classList.add('correct');
       document.querySelector('.neutralArea').classList.add('correct');
       document.querySelector('.warning').style.display = 'block';
+      hit = true;
       
    }else{
       document.querySelector('.areas').classList.remove('correct');
       document.querySelector('.neutralArea').classList.remove('correct');
       document.querySelector('.warning').style.display = 'none';
+      hit = false;
    }
 }
 
 function reset(){
-  document.querySelectorAll('.item').forEach(item =>{
-     document.querySelector('.neutralArea').append(item);
-     document.querySelector('.warning').style.display = 'none';
-     update();
-  })
+   if(hit === true){
+      document.querySelectorAll('.item').forEach(item =>{
+      document.querySelector('.neutralArea').append(item);
+      document.querySelector('.warning').style.display = 'none';
+      update();
+      });
+      randomCode();
+      console.log(`Nova sequência  ${code.a}-${code.b}-${code.c}` )
+      hit = false;
+   }else{
+      document.querySelectorAll('.item').forEach(item =>{
+      document.querySelector('.neutralArea').append(item);
+      document.querySelector('.warning').style.display = 'none';
+      update();
+      });
+   }
+  
    
 }
 
